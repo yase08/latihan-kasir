@@ -43,7 +43,7 @@ Route::middleware("isLogin")->group(function () {
     Route::get("/dashboard/sale", [SaleController::class, "index"])->name("sale");
     Route::get("/dashboard/sale/export", [SaleController::class, "export"])->name("export");
     Route::get("/dashboard/sale/pdf", [SaleController::class, "pdf"])->name("pdf");
-    Route::get("/dashboard/sale/download", [SaleController::class, "download"])->name("sale.download");
+    Route::get("/dashboard/sale/download/{id}", [SaleController::class, "download"])->name("sale.download");
     Route::get("/dashboard/sale/invoice", [SaleController::class, "invoiceView"])->name("sale.invoiceView");
     Route::post("/dashboard/sale/invoiceStore", [SaleController::class, "invoice"])->name("sale.invoice");
     Route::get("/dashboard/sale/edit/{id}", [SaleController::class, "edit"])->name("sale.edit");

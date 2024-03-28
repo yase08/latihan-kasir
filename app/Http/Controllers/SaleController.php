@@ -20,8 +20,8 @@ class SaleController extends Controller
     public function index()
     {
         $sales = Sale::all();
-        // $detailSales = DetailSale::find();
-        return view('pages.sale.index', compact('sales'));
+        $detailSales = DetailSale::all();
+        return view('pages.sale.index', compact('sales', 'detailSales'));
     }
 
     public function export()
@@ -118,6 +118,29 @@ class SaleController extends Controller
         }
 
         return redirect('/dashboard/sale')->with('success', 'Sale created successfully');
+    }
+
+    public function download($saleId)
+    {
+        $sale = Sale::with('detailSales.product')->find($saleId);
+        $totalPrice = 0;
+
+        $totalPrice = $sale->detailSales->reduce(function ($carry, $detail) {
+            return $carry + ($detail->product->price * $detail->quantity);
+        });
+
+        $detailSale = $sale->detailSales->map(function ($detail) {
+            return [
+                'name' => $detail->product ? $detail->product->name : 'N/A',
+                'price' => $detail->product->price,
+                'quantity' => $detail->quantity,
+                'subtotal' => $detail->product->price * $detail->quantity,
+            ];
+        })->toArray();
+
+        $pdf = Pdf::loadView('pages.sale.pdf', compact('totalPrice', 'sale', 'detailSale', 'totalPrice'));
+
+        return $pdf->download("invoice-{$saleId}.pdf");
     }
 
     public function pdf()

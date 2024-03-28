@@ -122,4 +122,6 @@
             var formAction = $('#updateStockForm').attr('action').replace(':id', productId);
             $('#updateStockForm').attr('action', formAction);
             $('#exampleModal').modal('show');
-       
+        });
+    </script>
+@endsection

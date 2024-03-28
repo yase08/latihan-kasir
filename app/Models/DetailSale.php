@@ -10,4 +10,14 @@ class DetailSale extends Model
     use HasFactory;
 
     protected $fillable = ['quantity', 'subtotal', 'product_id', 'sale_id'];
+
+    public function sale()
+    {
+        return $this->belongsTo(Sale::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
