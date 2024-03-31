@@ -94,9 +94,9 @@
         <div id="mid">
             <div class="info">
                 <br>
-                Nama Pelanggan : {{ $sale->customer->name }}</br>
-                Alamat Pelanggan : {{ $sale->customer->address }}</br>
-                No HP Pelanggan : {{ $sale->customer->phone }}</br>
+                Nama Pelanggan : {{ $data['name'] }}</br>
+                Alamat Pelanggan : {{ $data['address'] }}</br>
+                No HP Pelanggan : {{ $data['phone'] }}</br>
                 </p>
             </div>
         </div>

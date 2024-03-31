@@ -6,10 +6,14 @@
             Invoice
         </div>
         <div class="card-body">
-            <a href="/dashboard/sale/pdf" class="btn btn-primary" target="_blank">Export PDF</a>
-            <div>Customer Name: {{ $data['name'] }}</div>
-            <div>Customer Address: {{ $data['address'] }}</div>
-            <div>Customer Phone: {{ $data['phone'] }}</div>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div>Customer Name: {{ $data['name'] }}</div>
+                    <div>Customer Address: {{ $data['address'] }}</div>
+                    <div>Customer Phone: {{ $data['phone'] }}</div>
+                </div>
+                <a href="/dashboard/sale/pdf" class="btn btn-primary h-100" target="_blank">Export PDF</a>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
@@ -30,12 +34,14 @@
                     @endforeach
                 </tbody>
             </table>
-            <div>Total Price: Rp{{ number_format($totalPrice, 0, ',' . '.') }}</div>
-            <a href="#" class="btn btn-primary">Cancel</a>
-            <form action="{{ route('sale.store') }}" method="post">
-                @csrf
-                <button href="#" class="btn btn-primary" type="submit">Confirm</button>
-            </form>
+            <div class="mb-3">Total Price: Rp{{ number_format($totalPrice, 0, ',' . '.') }}</div>
+            <div class="d-flex justify-content-between">
+                <a href="#" class="btn btn-primary">Cancel</a>
+                <form action="{{ route('sale.store') }}" method="post">
+                    @csrf
+                    <button href="#" class="btn btn-primary" type="submit">Confirm</button>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

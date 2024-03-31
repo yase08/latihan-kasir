@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between">
                         <h3>User List</h3>
                         <div class="card-header-form">
                             <div class="input-group">
@@ -63,8 +63,7 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->role }}</td>
                                         <td>
-                                            <a href="{{ route('user.edit', $user->id) }}"
-                                                class="btn btn-warning btn-sm">Edit</a>
+                                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning">Edit</a>
                                             <form action="{{ route('user.destroy', $user->id) }}" method="POST"
                                                 class="d-inline">
                                                 @method('DELETE')

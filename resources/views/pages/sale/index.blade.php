@@ -72,8 +72,8 @@
                                             <td>Rp{{ number_format($sale->total_price, 0, ',' . '.') }}</td>
                                             <td>{{ $sale->user->name }}</td>
                                             <td>
-                                                <button class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal{{ $sale->id }}">Show Detail</button>
+                                                <button class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#exampleModal{{ $sale->id }}">Show Detail</button>
                                                 <a href="{{ route('sale.download', $sale->id) }}"
                                                     class="btn btn-warning">Download Payment</a>
                                                 <form action="{{ route('sale.destroy', $sale->id) }}" method="POST"
@@ -93,28 +93,50 @@
                 </div>
             </div>
         </div>
-        @foreach ($sales as $sale)
-            <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal{{ $sale->id }}">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Modal body text goes here.</p>
-                        </div>
-                        <div class="modal-footer bg-whitesmoke br">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                Close
-                            </button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
+    </section>
+    @foreach ($sales as $sale)
+        <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal{{ $sale->id }}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail Sale {{ $sale->id }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>Customer Name: {{ $sale->detailSales->first()->sale->customer->name }}</div>
+                        <div>Customer Address: {{ $sale->detailSales->first()->sale->customer->address }}</div>
+                        <div>Customer Phone: {{ $sale->detailSales->first()->sale->customer->phone }}</div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($sale->detailSales as $item)
+                                    <tr>
+                                        <th>{{ $item->product->name }}</th>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>Rp{{ number_format($item->product->price, 0, ',' . '.') }}</td>
+                                        <td>Rp{{ number_format($item->subtotal, 0, ',' . '.') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div>Total Price: Rp{{ number_format($sale->total_price, 0, ',' . '.') }}</div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
                     </div>
                 </div>
             </div>
-        @endforeach
-    </section>
+        </div>
+    @endforeach
 @endsection
